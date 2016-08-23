@@ -12,10 +12,10 @@ const config = require('./config');
 const app = express();
 
 
-nunjucks.configure('app/views', {
-    autoescape: true,
-    express: app
-});
+// nunjucks.configure('app/views', {
+//     autoescape: true,
+//     express: app
+// });
 
 require('./config/express')(app);
 require('./config/router')(app);
