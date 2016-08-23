@@ -1,6 +1,7 @@
 'use strict'
 
 const express = require('express');
+const nunjucks = require('nunjucks');
 const mongoose = require('mongoose');
 
 const port = process.env.PORT || 1314;
@@ -11,8 +12,10 @@ const config = require('./config');
 const app = express();
 
 
-console.log(env);
-
+nunjucks.configure('app/views', {
+    autoescape: true,
+    express: app
+});
 
 require('./config/express')(app);
 require('./config/router')(app);

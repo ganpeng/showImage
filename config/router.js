@@ -4,6 +4,6 @@ module.exports = (app) => {
 
 
     app.get('/', (req, res) => {
-        res.send('hehehehhe');
+        res.render('index.html')
     })
 }
