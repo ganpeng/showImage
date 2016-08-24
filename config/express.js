@@ -31,10 +31,13 @@ module.exports = (app) => {
     });
 
 
-    //  访问日志
-    app.use(morgan(log));
-    app.use(morgan('combined', {
-        stream: accessLogStream
-    }))
+    //  访问日志, 开发环境下调试用，生产环境下记录日志文件
+    if (app.get('env') === 'dev') {
+        app.use(morgan(log));
+    } else if (app.get('env') === 'production') {
+        app.use(morgan('combined', {
+            stream: accessLogStream
+        }))
+    }
 
 }

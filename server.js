@@ -5,11 +5,14 @@ const nunjucks = require('nunjucks');
 const mongoose = require('mongoose');
 
 const port = process.env.PORT || 1314;
-const env = process.env.NODE_ENV || 'production';
+const env = process.env.NODE_ENV || 'dev';
 const config = require('./config');
 
 
 const app = express();
+
+app.set('env', env);
+
 
 require('./config/express')(app);
 require('./config/router')(app);
