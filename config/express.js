@@ -1,13 +1,19 @@
 'use strict'
 const compression = require('compression');
 const nunjucks = require('nunjucks');
+const morgan = require('morgan');
+const fs = require('fs');
 const express = require('express');
 const join = require('path').join;
 const config = require('./');
 
 const viewDir = 'app/views'; // 模板文件路径
 
+const log = 'dev';
 
+const accessLogStream = fs.createWriteStream('logs/access.log', {
+    flags: 'a'
+})
 
 module.exports = (app) => {
 
@@ -23,5 +29,12 @@ module.exports = (app) => {
         autoescape: true,
         express: app
     });
+
+
+    //  访问日志
+    app.use(morgan(log));
+    app.use(morgan('combined', {
+        stream: accessLogStream
+    }))
 
 }
