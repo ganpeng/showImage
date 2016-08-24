@@ -7,6 +7,8 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const cookieSession = require('cookie-session');
 const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
+
 
 const fs = require('fs');
 const express = require('express');
@@ -70,7 +72,11 @@ module.exports = (app) => {
         cookie: {
             secure: true,
             maxAge: 10 * 60 * 60 * 1000
-        }
-    }))
+        },
+        store: new MongoStore({
+            url: 'mongodb://' + config.db.dev.host + ':' + config.db.dev.port + '/' + config.db.dev.dbName,
+            collection: 'session'
+        })
+    }));
 
 }
