@@ -2,6 +2,12 @@
 const compression = require('compression');
 const nunjucks = require('nunjucks');
 const morgan = require('morgan');
+
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const cookieSession = require('cookie-session');
+const session = require('express-session');
+
 const fs = require('fs');
 const express = require('express');
 const join = require('path').join;
@@ -15,6 +21,9 @@ const accessLogStream = fs.createWriteStream('logs/access.log', {
     flags: 'a'
 })
 
+const noCache = true; // 是否缓存模板引擎
+
+
 module.exports = (app) => {
 
     // 静态资源压缩
@@ -27,7 +36,8 @@ module.exports = (app) => {
     // 定义模板引擎
     nunjucks.configure(viewDir, {
         autoescape: true,
-        express: app
+        express: app,
+        noCache: noCache
     });
 
 
@@ -39,5 +49,28 @@ module.exports = (app) => {
             stream: accessLogStream
         }))
     }
+
+
+    app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded({
+        extended: true
+    }));
+
+    app.use(cookieParser());
+
+    app.use(cookieSession({
+        name: 'session',
+        keys: ['key1', 'key2']
+    }));
+
+    app.use(session({
+        secret: 'dongdong dr',
+        resave: false,
+        saveUninitialized: true,
+        cookie: {
+            secure: true,
+            maxAge: 10 * 60 * 60 * 1000
+        }
+    }))
 
 }

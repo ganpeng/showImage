@@ -4,6 +4,18 @@ module.exports = (app) => {
 
 
     app.get('/', (req, res) => {
-        res.render('index.html')
+        req.session.name = 'louis';
+
+        res.render('index.html', {
+            name: req.session.name
+        })
+    })
+
+
+    app.get('/to', (req, res) => {
+        let name = req.session.name;
+        res.render('user.html', {
+            name: name
+        })
     })
 }
