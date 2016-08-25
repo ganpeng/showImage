@@ -18,4 +18,9 @@ module.exports = (app) => {
             name: name
         })
     })
+
+    app.get('/dongdong', (req, res) => {
+        res.send('I love dongdong!!!');
+    })
+
 }

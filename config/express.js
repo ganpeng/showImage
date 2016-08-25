@@ -2,6 +2,8 @@
 const compression = require('compression');
 const nunjucks = require('nunjucks');
 const morgan = require('morgan');
+const errorHandle = require('errorhandler');
+const mongoose = require('mongoose');
 
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
@@ -26,7 +28,10 @@ const accessLogStream = fs.createWriteStream('logs/access.log', {
 const noCache = true; // 是否缓存模板引擎
 
 
+
 module.exports = (app) => {
+
+    const env = app.get('env');
 
     // 静态资源压缩
     app.use(compression());
@@ -39,14 +44,15 @@ module.exports = (app) => {
     nunjucks.configure(viewDir, {
         autoescape: true,
         express: app,
-        noCache: noCache
+        noCache: noCache,
+        watch: true
     });
 
 
     //  访问日志, 开发环境下调试用，生产环境下记录日志文件
-    if (app.get('env') === 'dev') {
+    if (env === 'dev') {
         app.use(morgan(log));
-    } else if (app.get('env') === 'production') {
+    } else if (env === 'production') {
         app.use(morgan('combined', {
             stream: accessLogStream
         }))
@@ -79,4 +85,9 @@ module.exports = (app) => {
         })
     }));
 
+
+    if (env === 'dev') {
+        app.use(errorHandle());
+        app.locals.pretty = true;
+    }
 }
