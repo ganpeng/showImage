@@ -1,0 +1,9 @@
+{% block message %}
+    {% if (info and info.length) %}
+        <ul>
+            {% for i in info %}
+                <li>{{ i }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}

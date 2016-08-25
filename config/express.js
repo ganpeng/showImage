@@ -9,6 +9,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const cookieSession = require('cookie-session');
 const session = require('express-session');
+const flash = require('connect-flash');
 const MongoStore = require('connect-mongo')(session);
 
 
@@ -85,6 +86,7 @@ module.exports = (app) => {
         })
     }));
 
+    app.use(flash());
 
     if (env === 'dev') {
         app.use(errorHandle());

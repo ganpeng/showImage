@@ -1,6 +1,8 @@
 'use strict'
 
 module.exports = (req, res) => {
-
-    res.render('index.html');
+    let user = req.session.user;
+    res.render('index.html', {
+        user : user
+    });
 }
