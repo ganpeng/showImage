@@ -12,10 +12,12 @@ module.exports = (app) => {
     app.route('/')
         .get(index)
 
-    app.route('/signin')
+    app.route('/login')
+        .get(user.login)
         .post(user.loadUser)
 
     app.route('/signup')
+        .get(user.signup)
         .post(user.createUser)
 
     app.route('/logout')

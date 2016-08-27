@@ -13,15 +13,11 @@ const _ = require('lodash');
 
 
 module.exports = {
-    signin: (req, res) => {
-        let user = req.session.user;
-        res.render('index.html', {
-            user : user
-        });
-    },
-
     login: (req, res) => {
-        res.render('index.html');
+        res.render('login.html');
+    },
+    signup : (req, res) => {
+        res.render('register.html');        
     },
     createUser: (req, res) => {
         co(function*() {

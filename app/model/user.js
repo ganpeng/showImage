@@ -23,6 +23,13 @@ const UserSchema = new Schema({
         required: true
     },
 
+    // 0 普通用户
+    // 10 管理员
+    role : {
+        type : Number,
+        default : 0
+    },
+
     createAt : {
         type : Date,
         default : Date.now
