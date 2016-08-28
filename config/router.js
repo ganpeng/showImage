@@ -49,7 +49,12 @@ module.exports = (app) => {
     app.route('/user/delete')
         .get(user.delete)
         
+        
+    //  image    
     app.route('/createImage')  
         .post(upload.single('imagefile'), image.createImage)
+    
+    app.route('/image/delete')
+        .get(image.delete)
         
 }

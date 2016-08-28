@@ -2,7 +2,15 @@
 const co = require('co');
 const Image = require('../model/image');
 const _ = require('lodash');
+const Promise = require('bluebird');
+const fs = require('fs');
+const unlink = Promise.promisify(fs.unlink);
+const exists = Promise.promisify(fs.exists);
 
+
+const IMAGEDIR = '../../public/upload/';
+
+console.log(IMAGEDIR);
 
 module.exports = {
 
@@ -36,6 +44,28 @@ module.exports = {
             if (!_.isEmpty(yield _image.save())) {
                 res.redirect('/image/list');
             }
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+    },
+    delete : (req, res) => {
+        co(function*() {
+            let id = req.query.id,
+                image = yield Image.findOne({ _id : id}).exec(),
+                imageUrl = image.url,
+                fileExists = yield exists(IMAGEDIR + imageUrl);
+
+            console.log(id);
+            console.log(imageUrl);
+
+            if (fileExists) {
+                yield unlink(IMAGEDIR + imageUrl);
+            }
+            yield Image.findByIdAndRemove({ _id : id }).exec();
+
+            res.redirect('/image/list');
+
         })
         .catch((err) => {
             console.log(err);
