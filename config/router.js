@@ -56,5 +56,7 @@ module.exports = (app) => {
     
     app.route('/image/delete')
         .get(image.delete)
+    app.route('/user/image/list')
+        .get(image.userImageList)
         
 }

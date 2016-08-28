@@ -14,6 +14,18 @@ module.exports = {
 
     list : (req, res) => {
         co(function*() {
+            let images = yield Image.find().exec(),
+                user = req.session.user;
+
+            res.render('list.html', {
+                user : user,
+                images : images
+            })
+        })
+    },
+
+    userImageList : (req, res) => {
+        co(function*() {
             let user = req.session.user,
                 id = user._id,
                 images = yield Image.find({ creator : id }).exec();
@@ -57,9 +69,9 @@ module.exports = {
 
             if (fileExists) {
                 yield unlink(relateUrl);
-                yield Image.findByIdAndRemove({ _id : id }).exec();
-                res.redirect('/image/list');
             }
+            yield Image.findByIdAndRemove({ _id : id }).exec();
+            res.redirect('/user/image/list');
         })
         .catch((err) => {
             console.log(err);
