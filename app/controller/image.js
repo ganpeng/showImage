@@ -10,8 +10,6 @@ const exists = Promise.promisify(fs.exists);
 
 const IMAGEDIR = '../../public/upload/';
 
-console.log(IMAGEDIR);
-
 module.exports = {
 
     list : (req, res) => {
@@ -54,21 +52,26 @@ module.exports = {
             let id = req.query.id,
                 image = yield Image.findOne({ _id : id}).exec(),
                 imageUrl = image.url,
-                fileExists = yield exists(IMAGEDIR + imageUrl);
-
-            console.log(id);
-            console.log(imageUrl);
+                relateUrl = `${__dirname}/../../public/upload/${imageUrl}`,
+                fileExists = yield promiseExists(relateUrl);
 
             if (fileExists) {
-                yield unlink(IMAGEDIR + imageUrl);
+                yield unlink(relateUrl);
+                yield Image.findByIdAndRemove({ _id : id }).exec();
+                res.redirect('/image/list');
             }
-            yield Image.findByIdAndRemove({ _id : id }).exec();
-
-            res.redirect('/image/list');
-
         })
         .catch((err) => {
             console.log(err);
         })
     }
+}
+
+function promiseExists(path) {
+    return new Promise((resolve, reject) => {
+        fs.exists(path, (e) => {
+            console.log(e);
+            resolve(e);
+        })
+    })
 }
