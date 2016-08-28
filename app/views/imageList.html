@@ -2,5 +2,69 @@
 
 
 {% block content %}
-    <h1>图片列表页面</h1> 
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">图片列表</h3>
+    </div>
+    <div class="panel-body">
+        <button class="btn btn-info add-image-btn">添加图片</button>
+        
+        <div class="add-image-form">
+            <form action="/createImage" class="form-horizontal" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="creator" value={{ user._id }}>
+                <div class="form-group">
+                    <label for="title" class="control-label col-md-3">图片名称:</label>
+                    <div class="col-md-9">
+                        <input type="text" name="title" class="form-control">
+                    </div> 
+                </div>
+                <div class="form-group">
+                    <label for="title" class="control-label col-md-3">图片描述:</label>
+                    <div class="col-md-9">
+                        <input type="text" name="desc" class="form-control">
+                    </div> 
+                </div>
+                <div class="form-group">
+                    <label for="title" class="control-label col-md-3">上传图片:</label>
+                    <div class="col-md-9">
+                        <input type="file" name="imagefile" class="form-control" value="上传">
+                    </div> 
+                </div>
+                <div class="form-group">
+                    <div class="col-md-9 col-md-offset-3">
+                        <button type="submit" class="btn btn-primary">提交</button>
+                    </div>
+                </div>
+            </form>
+        </div> 
+        
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>图片名称</th>
+                    <th>图片描述</th>
+                    <th>图片展示</th>
+                    <th>创建时间</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for image in images %}
+                <tr>
+                    <td>{{ image.title }}</td>
+                    <td>{{ image.desc}}</td>
+                    <td>
+                        <img src="/upload/{{ image.url }}" alt="{{ image.desc }}" width=50 height=30>
+                    </td>
+                    <td>{{ moment(user.createAt).format('YYYY-MM-DD') }}</td>
+                    <td>
+                        <a href="" class="btn btn-primary">修改</a>
+                        <a href="/image/delete?id={{ image._id }}" class="btn btn-danger">删除</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
 {% endblock %}

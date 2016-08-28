@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width initial-scale=1.0 user-scalable=no">
     <link rel="stylesheet" href="/libs/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/style.css">
-        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
@@ -15,8 +15,8 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container-fluid">
+    <div class="container">
+        <nav class="navbar navbar-inverse navbar-fixed-top" <div class="container-fluid">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                         <span class="sr-only">Toggle navigation</span>
@@ -36,36 +36,38 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     {% if user %}
-                        <li>
-                            <a href="javascript:;">
-                                    {{ user.username }}
-                                </a>
-                        </li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">菜单<span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="/profile">个人资料</a></li>
-                                <li><a href="/user/list">用户管理</a></li>
-                                <li><a href="/image/list">图片管理</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="/logout">退出</a></li>
-                            </ul>
-                        </li>
+                    <li>
+                        <a href="javascript:;">
+                            {{ user.username }}
+                        </a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">菜单<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/profile">个人资料</a></li>
+                            <li><a href="/user/list">用户管理</a></li>
+                            <li><a href="/image/list">图片管理</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="/logout">退出</a></li>
+                        </ul>
+                    </li>
                     {% else %}
-                        <li>
-                            <a href="/login">登录</a>
-                        </li>
-                        <li>
-                            <a href="/signup">注册</a>
-                        </li>
+                    <li>
+                        <a href="/login">登录</a>
+                    </li>
+                    <li>
+                        <a href="/signup">注册</a>
+                    </li>
                     {% endif %}
                 </ul>
             </div>
-        </div>
+    </div>
     </nav>
 
     {% block content %} {% endblock %}
 
+
+    </div>
     <script src="/libs/jquery/dist/jquery.min.js"></script>
     <script src="/libs/bootstrap/dist/js/bootstrap.min.js"></script>
 </body>

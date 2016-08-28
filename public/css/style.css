@@ -61,3 +61,16 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 body {
   padding-top: 70px;
 }
+
+th, td {
+  text-align: center;
+}
+
+.add-image-btn {
+  margin-bottom: 15px;
+}
+
+.add-image-form {
+  max-width: 600px;
+  margin: 0 auto;
+}

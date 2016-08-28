@@ -94,6 +94,34 @@ module.exports = {
         res.render('profile.html', {
             user : user
         })
+    },
+    userList : (req,res) => {
+        co(function*() {
+            let user,
+                users;
+            
+            user = req.session.user;
+            users = yield User.find({}).exec();
+            
+            res.render('userList.html', {
+                user : user,
+                users : users
+            });
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+    },
+
+    delete : (req, res) => {
+        co(function* () {
+            let id = req.query.id;
+            yield User.findByIdAndRemove(id).exec();
+            res.redirect('/user/list');
+        })
+        .catch((err) => {
+            console.log(err);
+        })
     }
 
 }

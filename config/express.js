@@ -11,6 +11,8 @@ const cookieSession = require('cookie-session');
 const session = require('express-session');
 const flash = require('connect-flash');
 const MongoStore = require('connect-mongo')(session);
+const moment = require('moment');
+const _ = require('lodash');
 
 
 const fs = require('fs');
@@ -92,4 +94,9 @@ module.exports = (app) => {
         app.use(errorHandle());
         app.locals.pretty = true;
     }
+    
+    
+    // 挂在客户端的工具库 
+    app.locals.moment = moment;
+    app.locals._ = _;
 }
